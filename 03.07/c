@@ -1,0 +1,33 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+void solve() {
+    int n, m, k;
+    cin >> n >> m >> k;
+    
+    vector<int> p;
+    
+    for (int i = n; i >= m + 1; --i) {
+        p.push_back(i);
+    }
+    
+    for (int i = 1; i <= m; ++i) {
+        p.push_back(i);
+    }
+    
+    for (int i = 0; i < n; ++i) {
+        cout << p[i] << " ";
+    }
+    cout << "\n";
+}
+
+int main() {
+    int t;
+    cin >> t;
+    while (t--) {
+        solve();
+    }
+    return 0;
+}
