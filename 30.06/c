@@ -1,0 +1,33 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+int main() {
+    string s;
+    if (!(cin >> s)) return 0;
+
+    string s_rev = s;
+    reverse(s_rev.begin(), s_rev.end());
+
+    string combined = s + "#" + s_rev;
+    int total_len = combined.length();
+
+    vector<int> pi(total_len, 0);
+    for (int i = 1; i < total_len; ++i) {
+        int j = pi[i - 1];
+        while (j > 0 && combined[i] != combined[j]) {
+            j = pi[j - 1];
+        }
+        if (combined[i] == combined[j]) {
+            j++;
+        }
+        pi[i] = j;
+    }
+
+    cout << pi.back() << "\n";
+
+    return 0;
+}
