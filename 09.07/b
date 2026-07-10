@@ -1,0 +1,58 @@
+#include <iostream>
+#include <vector>
+#include <set>
+#include <algorithm>
+
+using namespace std;
+
+void solve_incomplete() {
+    int n, c, d;
+    cin >> n >> c >> d;
+    
+    int total_elements = n * n;
+    vector<int> b(total_elements);
+    multiset<int> available_numbers;
+    
+    for (int i = 0; i < total_elements; ++i) {
+        cin >> b[i];
+        available_numbers.insert(b[i]);
+    }
+    int start_element = *available_numbers.begin();
+    
+    vector<vector<int>> grid(n, vector<int>(n));
+    grid[0][0] = start_element;
+    
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < n; ++j) {
+            if (i == 0 && j == 0) continue;
+            if (j > 0) {
+                grid[i][j] = grid[i][j - 1] + d;
+            } else {
+                grid[i][j] = grid[i - 1][j] + c;
+            }
+        }
+    }
+   
+    bool possible = true;
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < n; ++j) {
+            auto it = available_numbers.find(grid[i][j]);
+            if (it == available_numbers.end()) {
+                possible = false;
+                break;
+            }
+            available_numbers.erase(it); 
+        }
+        if (!possible) break;
+    }
+    
+    if (possible) cout << "YES\n";
+    else cout << "NO\n";
+}
+
+int main() {
+    int t;
+    cin >> t;
+    while (t--) { solve_incomplete(); }
+    return 0;
+}
