@@ -1,0 +1,43 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+void solve() {
+    int n, m;
+    cin >> n >> m;
+
+    vector<vector<int>> c(n, vector<int>(m + 1, 0));
+    for (int i = 0; i < n; ++i) {
+        for (int j = 1; j <= m; ++j) {
+            cin >> c[i][j];
+        }
+    }
+
+    vector<int> dp(m + 1, 0);
+
+    for (int i = 0; i < n; ++i) {
+        vector<int> next_dp(m + 1, 0);
+        for (int j = 0; j <= m; ++j) {
+            for (int k = 0; k <= j; ++k) {
+                next_dp[j] = max(next_dp[j], dp[j - k] + c[i][k]);
+            }
+        }
+        dp = move(next_dp);
+    }
+
+    cout << dp[m] << "\n";
+}
+
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    int t;
+    if (cin >> t) {
+        while (t--) {
+            solve();
+        }
+    }
+    return 0;
+}
