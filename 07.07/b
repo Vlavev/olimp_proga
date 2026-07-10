@@ -1,0 +1,29 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+
+    int n, k;
+    if (!(cin >> n >> k)) return 0;
+
+    const int MOD = 1000000007;
+    vector<int> dp(n + 1, 0);
+    dp[0] = 1;
+
+    long long current_window_sum = 1;
+
+    for (int i = 1; i <= n; ++i) {
+        dp[i] = current_window_sum;
+        current_window_sum = (current_window_sum + dp[i]) % MOD;
+        if (i >= k) {
+            current_window_sum = (current_window_sum - dp[i - k] + MOD) % MOD;
+        }
+    }
+
+    cout << dp[n] << "\n";
+    return 0;
+}
