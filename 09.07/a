@@ -1,0 +1,23 @@
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+void solve() {
+    int n, a, b;
+    cin >> n >> a >> b;
+
+    int option1 = n * a;
+    int option2 = (n / 2) * b + (n % 2) * a;
+
+    cout << min(option1, option2) << "\n";
+}
+
+int main() {
+    int t;
+    cin >> t;
+    while (t--) {
+        solve();
+    }
+    return 0;
+}
