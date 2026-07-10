@@ -1,0 +1,56 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+
+    int n;
+    if (!(cin >> n)) return 0;
+
+    vector<vector<int>> cost(n, vector<int>(n));
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < n; ++j) {
+            cin >> cost[i][j];
+        }
+    }
+
+    if (n == 1) {
+        cout << 0 << "\n";
+        return 0;
+    }
+
+    int num_masks = 1 << n;
+    const int INF = 1e9;
+    vector<vector<int>> dp(num_masks, vector<int>(n, INF));
+    
+    dp[1][0] = 0;
+
+    for (int mask = 1; mask < num_masks; ++mask) {
+        for (int last = 0; last < n; ++last) {
+            if (dp[mask][last] == INF) continue;
+
+            for (int next_city = 0; next_city < n; ++next_city) {
+                if (!(mask & (1 << next_city))) {
+                    int next_mask = mask | (1 << next_city);
+                    dp[next_mask][next_city] = min(dp[next_mask][next_city], dp[mask][last] + cost[last][next_city]);
+                }
+            }
+        }
+    }
+
+    int ans = INF;
+    int full_mask = num_masks - 1;
+    for (int last = 0; last < n; ++last) {
+        if (dp[full_mask][last] != INF) {
+            ans = min(ans, dp[full_mask][last] + cost[last][0]);
+        }
+    }
+
+    cout << ans << "\n";
+
+    return 0;
+}
