@@ -1,0 +1,33 @@
+#include <iostream>
+#include <vector>
+#include <numeric>
+#include <algorithm>
+
+using namespace std;
+
+void solve() {
+    vector<int> a(7);
+    int sum_all = 0;
+    int max_val = -100; 
+    
+    for (int i = 0; i < 7; ++i) {
+        cin >> a[i];
+        sum_all += a[i];
+        if (a[i] > max_val) {
+            max_val = a[i];
+        }
+    }
+    
+    cout << -sum_all + 2 * max_val << "\n";
+}
+
+int main() {
+    
+    int t;
+    cin >> t;
+    while (t--) {
+        solve();
+    }
+    
+    return 0;
+}
